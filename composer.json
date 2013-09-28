@@ -1,0 +1,14 @@
+{
+  "name": "galymzhan/wstats",
+
+  "require": {
+    "silex/silex": "~1.0"
+  },
+
+  "extra": {
+    "heroku": {
+      "document-root": "web",
+      "index-document": "index.php"
+    }
+  }
+}
