@@ -1,0 +1,36 @@
+{% extends 'layouts/main.twig' %}
+
+{% block title 'History' %}
+
+{% block content %}
+
+<div class="pure-u-1">
+
+  <h1>Level history &amp; estimates</h1>
+
+  <div class="note">
+    All times are in UTC. Data below <span class="estimate">{{ userLevel }}-level</span> are
+    estimated based on your average time per level, よ.
+  </div>
+
+  <table class="pure-table pure-table-striped">
+    <thead>
+      <tr>
+        <th>Level</th>
+        <th>Unlocked at</th>
+        <th>Took time</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for i in range(1, 50) %}
+      <tr class="{{ i > userLevel ? 'estimate' : '' }}">
+        <td>{{ i }}</td>
+        <td>{{ history[i]['date']|date }}</td>
+        <td>{{ history[i]['took']|time_interval }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

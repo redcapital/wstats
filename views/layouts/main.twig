@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %} | wstats</title>
+    <link rel="stylesheet" href="{{ url('/assets/css/pure-min.css') }}">
+    <link rel="stylesheet" href="{{ url('/assets/css/style.css') }}">
+  </head>
+  <body>
+    <div id="root">
+      <div class="page-wrapper pure-g-r">
+        <form method="post" class="pure-form form-token pure-u-1" action="{{ url('/') }}">
+          <input type="text" name="apiKey" class="apikey" placeholder="Your Public API Key" value="{{ apiKey|default('') }}">
+          <button type="submit" name="op" value="history" class="pure-button pure-button-primary">Level history &amp; estimates</button>
+        </form>
+
+        <div class="content">
+        {% block content %}{% endblock content %}
+        </div>
+      </div>
+      <div id="root_footer"></div>
+    </div>
+  </body>
+</html>

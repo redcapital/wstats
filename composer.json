@@ -3,7 +3,14 @@
 
   "require": {
     "php": ">=5.3.2",
-    "silex/silex": "~1.0"
+    "silex/silex": "~1.0",
+    "twig/twig": "~1.8"
+  },
+
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-0": { "Wstats\\": "lib/" }
   },
 
   "extra": {
