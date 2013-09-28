@@ -5,65 +5,7 @@ class History
 {
     const URL = 'http://www.wanikani.com/api/user';
 
-    protected static $firstRadicals = array();
-
     protected $apiKey;
-
-    public static function init()
-    {
-        History::$firstRadicals = array(
-            1 => 'barb',
-            2 => 'child',
-            3 => 'antennae',
-            4 => 'alligator',
-            5 => 'axe',
-            6 => 'angel',
-            7 => 'bird',
-            8 => 'boobs',
-            9 => 'brush',
-            10 => 'alcohol',
-            11 => 'bear',
-            12 => 'big-bird',
-            13 => 'books',
-            14 => 'bar',
-            15 => 'cemetery',
-            16 => 'glue',
-            17 => 'comfort',
-            18 => 'conflict',
-            19 => 'become',
-            20 => 'arrows',
-            21 => 'angle',
-            22 => 'ability',
-            23 => 'clothes',
-            24 => 'accept',
-            25 => 'bot',
-            26 => 'announce',
-            27 => 'change',
-            28 => 'giant',
-            29 => 'above',
-            30 => 'joker',
-            31 => 'bookshelf',
-            32 => 'beforehand',
-            33 => 'inside',
-            34 => 'catapult',
-            35 => 'belt',
-            36 => 'bright',
-            37 => 'omen',
-            38 => 'have',
-            39 => 'buddy',
-            40 => 'employ',
-            41 => 'cactus',
-            42 => 'bone',
-            43 => 'business',
-            44 => 'blade',
-            45 => 'again',
-            46 => 'favor',
-            47 => 'task',
-            48 => 'form',
-            49 => 'crab-trap',
-            50 => 'name',
-        );
-    }
 
     public function __construct($apiKey)
     {
@@ -123,13 +65,18 @@ class History
                 'error' => 'History is available only after reaching level 2',
             );
         }
-        $radicalMap = array_flip(static::$firstRadicals);
         $history = array();
         foreach ($jsonData['requested_information'] as $radical) {
-            if (isset($radicalMap[$radical['meaning']])) {
-                if (isset($radical['stats'])) {
-                    $history[$radical['level']] = array(
-                        'date' => $radical['stats']['unlocked_date'],
+            if (isset($radical['stats'])) {
+                $level = $radical['level'];
+                if (isset($history[$level])) {
+                    $history[$level]['date'] = min(
+                        $history[$level]['date'],
+                        $radical['stats']['unlocked_date']
+                    );
+                } else {
+                    $history[$level] = array(
+                        'date' => $radical['stats']['unlocked_date']
                     );
                 }
             }
@@ -185,4 +132,3 @@ class History
     }
 }
 
-History::init();
