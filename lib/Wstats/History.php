@@ -117,6 +117,12 @@ class History
     protected function processData(array $jsonData)
     {
         $userLevel = $jsonData['user_information']['level'];
+        if ($userLevel == 1) {
+            return array(
+                'success' => false,
+                'error' => 'History is available only after reaching level 2',
+            );
+        }
         $radicalMap = array_flip(static::$firstRadicals);
         $history = array();
         foreach ($jsonData['requested_information'] as $radical) {
@@ -130,22 +136,20 @@ class History
         }
         $average = 0;
         foreach ($history as $level => &$record) {
-            if ($level == 1) {
-                $record['took'] = 0;
-            } else {
-                $record['took'] = $record['date'] - $history[$level - 1]['date'];
+            if (isset($history[$level + 1])) {
+                $record['took'] = $history[$level + 1]['date'] - $record['date'];
+                $average += $record['took'];
             }
-            $average += $record['took'];
         }
+        $average = (int)($average / ($userLevel - 1));
         unset($record);
-        $average = (int)($average / $userLevel);
         $date = $history[$userLevel]['date'];
-        for ($level = $userLevel + 1; $level < 51; $level++) {
-            $date += $average;
-            $history[$level] = array(
-                'date' => $date,
-                'took' => $average,
-            );
+        for ($level = $userLevel; $level < 51; $level++) {
+            $history[$level]['took'] = $average;
+            if ($level > $userLevel) {
+                $date += $average;
+                $history[$level]['date'] = $date;
+            }
         }
 
         return array(

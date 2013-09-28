@@ -9,7 +9,7 @@
   <h1>Level history &amp; estimates</h1>
 
   <div class="note">
-    All times are in UTC. Data below <span class="estimate">{{ userLevel }}-level</span> are
+    All times are in UTC. Data for <span class="estimate">{{ userLevel }}-level and below</span> are
     estimated based on your average time per level, よ.
   </div>
 
@@ -18,12 +18,12 @@
       <tr>
         <th>Level</th>
         <th>Unlocked at</th>
-        <th>Took time</th>
+        <th>Took time to complete</th>
       </tr>
     </thead>
     <tbody>
     {% for i in range(1, 50) %}
-      <tr class="{{ i > userLevel ? 'estimate' : '' }}">
+      <tr class="{{ i >= userLevel ? 'estimate' : '' }}">
         <td>{{ i }}</td>
         <td>{{ history[i]['date']|date }}</td>
         <td>{{ history[i]['took']|time_interval }}</td>
