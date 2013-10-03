@@ -16,19 +16,15 @@ class HandlebarsTemplate < Tilt::Template
   def prepare ; end
 
   def evaluate(scope, locals, &block)
-    target   = template_target(scope)
-    template = precompile_ember_handlebars(data)
-    "#{target} = #{template}\n"
+    name = template_name(scope.logical_path).inspect
+    template = precompile_handlebars(data)
+    "jQuery.render.addTemplate(#{name}, #{template})"
   end
 
   private
 
-  def template_target(scope)
-    "template[#{template_name(scope.logical_path).inspect}]"
-  end
-
-  def precompile_ember_handlebars(string)
-    Barber::FilePrecompiler.call(string)
+  def precompile_handlebars(string)
+    Barber::InlinePrecompiler.call(string)
   end
 
   def template_name(path)
