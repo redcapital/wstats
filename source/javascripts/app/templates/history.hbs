@@ -1,11 +1,4 @@
-{% extends 'layouts/main.twig' %}
-
-{% block title 'History' %}
-
-{% block content %}
-
 <div class="pure-u-1">
-
   <h1>Level history &amp; estimates</h1>
 
   <div class="note">
@@ -22,15 +15,11 @@
       </tr>
     </thead>
     <tbody>
-    {% for i in range(1, 50)  if history[i] is defined %}
-      <tr class="{{ i >= userLevel ? 'estimate' : '' }}">
-        <td>{{ i }}</td>
-        <td>{{ history[i]['date']|date }}</td>
-        <td>{{ history[i]['took']|time_interval }}</td>
-      </tr>
-    {% endfor %}
+    {{#history this}}
+      <td>{{ @level }}</td>
+      <td>{{ datetime date }}</td>
+      <td>{{ timeInterval took  }}</td>
+    {{/history}}
     </tbody>
   </table>
 </div>
-
-{% endblock %}
