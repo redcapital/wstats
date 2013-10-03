@@ -28,12 +28,18 @@ User.prototype.history = function(callback) {
       };
     }
 
-    var average = 0;
+    var average = 0, maxTook = 0;
     $.each(history, function(level, record) {
       level = parseInt(level, 10);
       if (history[level + 1]) {
         record.took = history[level + 1].date - record.date;
         average += record.took;
+        maxTook = Math.max(maxTook, record.took);
+      }
+    });
+    $.each(history, function(level, record) {
+      if (record.took) {
+        record.tookPercentage = 100 * record.took / maxTook;
       }
     });
 
@@ -57,5 +63,5 @@ User.prototype.history = function(callback) {
   self.client.api('radicals', function(data) {
     callback(processData(data));
   });
-}
+};
 

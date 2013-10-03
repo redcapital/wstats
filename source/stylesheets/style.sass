@@ -1,9 +1,25 @@
+@import "flat-palette"
+@import "compass/css3"
+
+body
+  background: #fff
+
 body,
 .pure-g [class *= "pure-u"],
 .pure-g-r [class *= "pure-u"]
   font-family: "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", "Segoe UI", "Tahoma", sans-serif
 
-.page-wrapper
+.l-box
+  padding: 0 1em
+  +box-sizing(border-box)
+
+  &:first-child
+    padding-left: 0
+
+  &:last-child
+    padding-right: 0
+
+.l-page-wrapper
   padding: 1em
 
 .form-token .apikey
@@ -21,3 +37,22 @@ body,
 .error
   color: #f00
 
+.progress
+  background: $flat-green-1
+  height: 1em
+
+.pure-table-history
+  &, td, th
+    border: none
+
+  tbody tr
+    cursor: pointer
+
+    &.selected
+      background: $flat-gray-1
+
+  .performance
+    width: 100%
+
+  .info
+    font-size: .8em

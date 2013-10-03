@@ -18,30 +18,14 @@ Handlebars.registerHelper('timeInterval', function(interval) {
   return s.length ? s : '0 days';
 });
 
-Handlebars.registerHelper('history_item', function(level, userLevel) {
-  var s = '<tr ';
-  console.log(level, userLevel);
-  if (level >= userLevel) {
-    s += 'class="estimate"';
-  }
-  s += '>';
-  s += '<td>' + this.key + '</td>';
-  s += '<td>' + Handlebars.helpers.datetime.apply(this, [this.date]) + '</td>';
-  s += '<td> </td>';
-  s += '</tr>';
-  return new Handlebars.SafeString(s);
-});
-
 Handlebars.registerHelper('history', function(context, options) {
   var s = '', data;
-  for (var level = 1; level < 51; level++) {
+  for (var level = 1; level < context.userLevel; level++) {
     if (!context.history[level]) continue;
-    s += '<tr ';
-    if (level >= context.userLevel) {
-      s += 'class="estimate"';
-    }
+    s += '<tr class="jsCompletedLevel selected">';
     data = { level: level };
-    s += '>' + options.fn(context.history[level], { data: data }) + '</tr>';
+    s += options.fn(context.history[level], { data: data });
+    s += '</tr>';
   }
   return s;
 });
