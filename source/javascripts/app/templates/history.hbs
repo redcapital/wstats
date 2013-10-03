@@ -1,33 +1,3 @@
-{{!--
-<div class="pure-u-1">
-  <h1>Level history &amp; estimates</h1>
-
-  <div class="note">
-    All times are in UTC. Data for <span class="estimate">{{ userLevel }}-level and below</span> are
-    estimated based on your average time per level, よ.
-  </div>
-
-  <table class="pure-table pure-table-striped">
-    <thead>
-      <tr>
-        <th> </th>
-        <th>Level</th>
-        <th>Unlocked at</th>
-        <th>Took time to complete</th>
-      </tr>
-    </thead>
-    <tbody>
-    {{#history this}}
-    <td><input type="checkbox">
-      <td>{{ @level }}</td>
-      <td>{{ datetime date }}</td>
-      <td>{{ timeInterval took  }}</td>
-    {{/history}}
-    </tbody>
-  </table>
-</div>
---}}
-
 <div class="pure-u-1-2 l-box">
   <h1>Level history</h1>
 
@@ -36,11 +6,11 @@
     selected levels.
   </div>
 
-  <table class="pure-table pure-u-1 pure-table-history">
+  <table class="pure-table pure-table-horizontal pure-u-1 pure-table-history">
     <thead>
       <tr>
         <th>Level</th>
-        <th class="performance">Performance</th>
+        <th class="grow">Performance</th>
       </tr>
     </thead>
 
@@ -49,7 +19,7 @@
       <td>
         <form class="pure-form pure-form-aligned">
           <label class="pure-checkbox">
-            <input type="checkbox" checked> {{ @level }}
+            <input type="checkbox" class="jsHistoryCheckbox" checked data-level="{{ @level }}"> {{ @level }}
           </label>
         </form>
       </td>
@@ -66,4 +36,7 @@
 
 <div class="pure-u-1-2 l-box">
   <h1>Estimates</h1>
+
+  <div id="estimates">
+  </div>
 </div>

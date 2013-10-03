@@ -17,11 +17,15 @@ Client.prototype.api = function(resource, callback) {
   } else {
     var url = self.URL + '/' + self.apiKey + '/' + resource;
     $.getJSON(url + '?callback=?', null, function(data) {
-      // cache if succesfull
-      if (!data.hasOwnProperty('error')) {
+      if (data.hasOwnProperty('error')) {
+        if (self.onError) {
+          self.onError(data.error);
+        }
+      } else {
+        // cache if succesfull
         self._cache[resource] = data;
+        callback(data);
       }
-      callback(data);
     });
   }
 };

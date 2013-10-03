@@ -1,6 +1,7 @@
 //= require ./vendor/jquery
 //= require ./vendor/handlebars.runtime
-//= require ./jquery.render
+//= require_tree ./vendor/
+//= require ./app/jquery.render
 //= require ./app/app
 //= require_tree ./app/
 

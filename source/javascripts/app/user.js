@@ -5,7 +5,7 @@ function User(client) {
 User.prototype.history = function(callback) {
   var self = this;
 
-  var processData = function(data) {
+  function processData(data) {
     // maxLevel represents maximum unlocked level, it's not the same as user
     // level, sometimes WK doesn't immediately return data about unlocked 
     // level
@@ -28,12 +28,11 @@ User.prototype.history = function(callback) {
       };
     }
 
-    var average = 0, maxTook = 0;
+    var maxTook = 0;
     $.each(history, function(level, record) {
       level = parseInt(level, 10);
       if (history[level + 1]) {
         record.took = history[level + 1].date - record.date;
-        average += record.took;
         maxTook = Math.max(maxTook, record.took);
       }
     });
@@ -43,16 +42,6 @@ User.prototype.history = function(callback) {
       }
     });
 
-    average = Math.floor(average / (maxLevel - 1));
-    var date = history[maxLevel].date;
-    for (var level = maxLevel; level <= self.client.LEVELS; level++) {
-      if (level > maxLevel) {
-        date += average;
-        history[level] = { date: date };
-      }
-      history[level].took = average;
-    }
-
     return {
       success: true,
       userLevel: maxLevel,
@@ -60,8 +49,63 @@ User.prototype.history = function(callback) {
     };
   };
 
-  self.client.api('radicals', function(data) {
+  if (self._history) {
+    callback(self._history);
+  } else {
+    self.client.api('radicals', function(data) {
+      var history = processData(data);
+      if (history.success) {
+        self._history = history;
+      }
+      callback(history);
+    });
+  }
+
+
+};
+
+User.prototype.estimate = function(levels, callback) {
+  var self = this;
+
+  function processData(data) {
+    if (!data.success) {
+      return {
+        success: false,
+        error: data.error
+      };
+    }
+    var average = 0, count = 0, estimates = {};
+    $.each(data.history, function(level, record) {
+      level = parseInt(level, 10);
+      if (levels.indexOf(level) != -1) {
+        average += record.took;
+        count++;
+      }
+    });
+    if (count) {
+      average = Math.floor(average / count);
+    }
+    var date = data.history[data.userLevel].date;
+    for (var level = data.userLevel; level <= self.client.LEVELS; level++) {
+      date += average;
+      estimates[level] = date;
+    }
+
+    return {
+      success: true,
+      average: average,
+      estimates: estimates
+    };
+  }
+
+  self.history(function(data) {
     callback(processData(data));
+  });
+};
+
+User.prototype.info = function(callback) {
+  this.client.api('user-information', function(data) {
+    callback(data.user_information);
   });
 };
 

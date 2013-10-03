@@ -3,6 +3,7 @@
 
 body
   background: #fff
+  line-height: 1.5em
 
 body,
 .pure-g [class *= "pure-u"],
@@ -21,12 +22,12 @@ body,
 
 .l-page-wrapper
   padding: 1em
+  position: relative
 
-.form-token .apikey
-  width: 300px
-
-.content
-  margin-top: 10px
+.form-token
+  text-align: center
+  .apikey
+    width: 300px
 
 .note
   margin: .5em 0
@@ -41,10 +42,10 @@ body,
   background: $flat-green-1
   height: 1em
 
-.pure-table-history
-  &, td, th
-    border: none
+.grow
+  width: 100%
 
+.pure-table-history
   tbody tr
     cursor: pointer
 
@@ -56,3 +57,14 @@ body,
 
   .info
     font-size: .8em
+
+.pure-menu-main
+  margin-left: 32px
+
+.loader
+  position: absolute
+  left: 16px
+  top: 16px
+  width: 32px
+  height: 32px
+  background: image-url('301.gif')

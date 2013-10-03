@@ -1,6 +1,5 @@
 Handlebars.registerHelper('datetime', function(value) {
-  var date = new Date(value * 1000);
-  return date.toUTCString();
+  return moment.unix(value).format('MMMM Do YYYY, HH:mm');
 });
 
 Handlebars.registerHelper('timeInterval', function(interval) {
