@@ -1,0 +1,21 @@
+<div class="note">
+  Average time per level: <strong>{{ timeInterval average }}</strong>
+</div>
+
+<table class="pure-table pure-table-horizontal pure-u-1 pure-table-striped">
+  <thead>
+    <tr>
+      <th>Level</th>
+      <th class="grow">Estimated completion date</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {{#each estimates}}
+    <tr>
+      <td>{{ @key }}</td>
+      <td>{{ datetime this }}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>

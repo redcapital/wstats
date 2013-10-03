@@ -1,0 +1,70 @@
+@import "flat-palette"
+@import "compass/css3"
+
+body
+  background: #fff
+  line-height: 1.5em
+
+body,
+.pure-g [class *= "pure-u"],
+.pure-g-r [class *= "pure-u"]
+  font-family: "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", "Segoe UI", "Tahoma", sans-serif
+
+.l-box
+  padding: 0 1em
+  +box-sizing(border-box)
+
+  &:first-child
+    padding-left: 0
+
+  &:last-child
+    padding-right: 0
+
+.l-page-wrapper
+  padding: 1em
+  position: relative
+
+.form-token
+  text-align: center
+  .apikey
+    width: 300px
+
+.note
+  margin: .5em 0
+
+.estimate
+  color: #dd514c
+
+.error
+  color: #f00
+
+.progress
+  background: $flat-green-1
+  height: 1em
+
+.grow
+  width: 100%
+
+.pure-table-history
+  tbody tr
+    cursor: pointer
+
+    &.selected
+      background: $flat-gray-1
+
+  .performance
+    width: 100%
+
+  .info
+    font-size: .8em
+
+.pure-menu-main
+  margin-left: 32px
+
+.loader
+  position: absolute
+  left: 16px
+  top: 16px
+  width: 32px
+  height: 32px
+  background: image-url('301.gif')

@@ -1,0 +1,42 @@
+<div class="pure-u-1-2 l-box">
+  <h1>Level history</h1>
+
+  <div class="note">
+    All times are in UTC. Estimates are calculated based on average time of
+    selected levels.
+  </div>
+
+  <table class="pure-table pure-table-horizontal pure-u-1 pure-table-history">
+    <thead>
+      <tr>
+        <th>Level</th>
+        <th class="grow">Performance</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {{#history this}}
+      <td>
+        <form class="pure-form pure-form-aligned">
+          <label class="pure-checkbox">
+            <input type="checkbox" class="jsHistoryCheckbox" checked data-level="{{ @level }}"> {{ @level }}
+          </label>
+        </form>
+      </td>
+      <td>
+        <div class="info">
+          Took <strong>{{ timeInterval took }}</strong>. Unlocked at {{ datetime date }}
+        </div>
+        <div class="progress" style="width:{{ tookPercentage }}%"></div>
+      </td>
+      {{/history}}
+    </tbody>
+  </table>
+</div>
+
+<div class="pure-u-1-2 l-box">
+  <h1>Estimates</h1>
+
+  <div id="estimates">
+  </div>
+</div>
