@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
 
 gem 'rack'
-gem "middleman", "~>3.1.5"
+gem "middleman", "~>3.0"
 gem "barber"
