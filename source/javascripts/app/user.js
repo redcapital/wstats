@@ -114,13 +114,16 @@ User.prototype.unrecognizedKanji = function(text, callback) {
 
   function searchUnrecognized() {
     text = text.replace(/[^\u4e00-\u9faf]+/g, '');
-    var list = [];
-    for (var i = 0, len = text.length; i < len; i++) {
+    var list = [], i, len, seen = {}, count = 0;
+    for (i = 0, len = text.length; i < len; i++) {
+      if (seen[text[i]]) continue;
+      seen[text[i]] = true;
+      ++count;
       if (!self._indexedKanjis[text[i]]) {
         list.push(text[i]);
       }
     }
-    return { kanjiCount: len, list: list };
+    return { kanjiCount: count, list: list };
   }
 
   if (!self._indexedKanjis) {

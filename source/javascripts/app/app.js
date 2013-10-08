@@ -25,6 +25,9 @@ App.prototype.run = function() {
       case '#history':
         self.history();
         break;
+      case '#measure':
+        $('#content').render('measureText');
+        break;
     }
   });
   
@@ -49,6 +52,10 @@ App.prototype.run = function() {
       $(this).closest('.jsCompletedLevel').removeClass('selected');
     }
     self.estimate();
+  });
+
+  $('#content').debounce('keydown', '.jsMeasureTextarea', function() {
+    self.measureText($(this).val());
   });
 };
 
@@ -99,4 +106,17 @@ App.prototype.showLoader = function() {
 
 App.prototype.hideLoader = function() {
   this.$loader.hide();
+};
+
+App.prototype.measureText = function(text) {
+  var self = this;
+  self.showLoader();
+  self.user.unrecognizedKanji(text, function(result) {
+    self.hideLoader();
+    result.recognizable = result.kanjiCount - result.list.length;
+    result.percentage = result.kanjiCount > 0
+      ? (100 * result.recognizable / result.kanjiCount).toFixed(2)
+      : 0;
+    $('#measureStats').render('measureStats', result);
+  });
 };

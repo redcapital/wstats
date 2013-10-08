@@ -38,5 +38,13 @@ describe("User", function() {
         done();
       });
     });
+
+    async.it("counts distinct kanjis", function(done) {
+      user.unrecognizedKanji('this is 川 character - 川. 見返り柳.見返り柳.', function(unrecognized) {
+        expect(unrecognized.kanjiCount).toEqual(4);
+        expect(unrecognized.list).toEqual(['見', '返', '柳']);
+        done();
+      });
+    });
   });
 });
