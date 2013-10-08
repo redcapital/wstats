@@ -1,0 +1,43 @@
+Factory.define('stats')
+  .attr('srs', 'enlighten')
+  .attr('unlocked_date', 1363718039)
+  .attr('available_date', 1383498220)
+  .attr('burned', false)
+  .attr('burned_date', 0)
+  .attr('meaning_correct', 10)
+  .attr('meaning_incorrect', 1)
+  .attr('meaning_max_streak', 6)
+  .attr('meaning_current_streak', 4)
+  .attr('reading_correct', 10)
+  .attr('reading_incorrect', 0)
+  .attr('reading_max_streak', 10)
+  .attr('reading_current_streak', 10)
+;
+
+Factory.define('kanji')
+  .attr('character', '工')
+  .attr('meaning', 'industry')
+  .attr('onyomi', 'こう')
+  .attr('kunyomi', null)
+  .attr('important_reading', 'onyomi')
+  .attr('level', 1)
+  .attr('stats', Factory.attributes('stats'))
+;
+
+Factory.define('user')
+  .attr('username', 'charlie_sheen')
+  .attr('gravatar', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+  .attr('level', 10)
+  .attr('title', 'Turtles')
+  .attr('about', '')
+  .attr('website', 'http://example.com')
+  .attr('twitter', '')
+  .attr('topics_count', 15)
+  .attr('posts_count', 25)
+  .attr('creation_date', 1362553959)
+;
+
+Factory.define('response')
+  .attr('user_information', Factory.attributes('user'))
+  .attr('requested_information', null)
+;

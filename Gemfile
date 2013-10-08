@@ -7,3 +7,6 @@ gem 'barber'
 gem 'rack'
 gem 'puma'
 
+group :development, :test do
+  gem 'middleman-jasmine'
+end

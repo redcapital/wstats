@@ -47,7 +47,7 @@ User.prototype.history = function(callback) {
       userLevel: maxLevel,
       history: history
     };
-  };
+  }
 
   if (self._history) {
     callback(self._history);
@@ -107,5 +107,33 @@ User.prototype.info = function(callback) {
   this.client.api('user-information', function(data) {
     callback(data.user_information);
   });
+};
+
+User.prototype.unrecognizedKanji = function(text, callback) {
+  var self = this;
+
+  function searchUnrecognized() {
+    text = text.replace(/[^\u4e00-\u9faf]+/g, '');
+    var list = [];
+    for (var i = 0, len = text.length; i < len; i++) {
+      if (!self._indexedKanjis[text[i]]) {
+        list.push(text[i]);
+      }
+    }
+    return { kanjiCount: len, list: list };
+  }
+
+  if (!self._indexedKanjis) {
+    self._indexedKanjis = {};
+    self.client.api('kanji', function(data) {
+      var kanjis = data.requested_information;
+      for (var i = 0, len = kanjis.length; i < len; i++) {
+        self._indexedKanjis[kanjis[i].character] = true;
+      }
+      callback(searchUnrecognized());
+    });
+  } else {
+    callback(searchUnrecognized());
+  }
 };
 
