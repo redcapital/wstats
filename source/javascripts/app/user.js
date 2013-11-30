@@ -7,23 +7,23 @@ User.prototype.history = function(callback) {
 
   function processData(data) {
     // maxLevel represents maximum unlocked level, it's not the same as user
-    // level, sometimes WK doesn't immediately return data about unlocked 
+    // level, sometimes WK doesn't immediately return data about unlocked
     // level
     var history = {}, maxLevel = 0;
     $.each(data.requested_information, function(i, radical) {
-      if (radical.stats) {
+      if (radical.user_specific) {
         var level = radical.level;
         maxLevel = Math.max(level, maxLevel);
         if (history[level]) {
-          history[level].date = Math.min(history[level].date, radical.stats.unlocked_date);
+          history[level].date = Math.min(history[level].date, radical.user_specific.unlocked_date);
         } else {
-          history[level] = { date: radical.stats.unlocked_date };
+          history[level] = { date: radical.user_specific.unlocked_date };
         }
       }
     });
     if (maxLevel < 2) {
       return {
-        success: false, 
+        success: false,
         error: 'History is available only after reaching level 2'
       };
     }
